@@ -42,7 +42,7 @@ public class dbTransactions extends connection {
         }
         return null;
     }
-    public Transaction getReceiver() {
+    public List<Transaction> getTransactionWhereReceiverId() {
 
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT * FROM TRANSACTION WHERE receiver_id=?";
@@ -57,26 +57,26 @@ public class dbTransactions extends connection {
             ResultSet rs = preparedStatement.executeQuery();
 
 
-            Transaction transaction = new Transaction();
+            List<Transaction> transactions = new ArrayList<>();
             while (rs.next()) {
 
-
+                Transaction transaction = new Transaction();
                 transaction.setTransaction_id(rs.getLong("transaction_id"));
                 transaction.setReceiver_id(rs.getLong("receiver_id"));
                 transaction.setGiver_id(rs.getLong("giver_id"));
                 transaction.setAmount(rs.getDouble("amount"));
                 transaction.setForm(rs.getString("Form"));
-
+                transactions.add(transaction);
             }
             connection.close();
-            return transaction;
+            return transactions;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return null;
     }
-    public Transaction getGiver() {
+    public List<Transaction> getTransactionWhereGiverId() {
 
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT * FROM TRANSACTION WHERE giver_id=?";
@@ -89,18 +89,20 @@ public class dbTransactions extends connection {
             // execute select SQL stetement
             ResultSet rs = preparedStatement.executeQuery();
 
-            Transaction transaction = new Transaction();
+            List<Transaction> transactions = new ArrayList<>();
+
             while (rs.next()) {
+                Transaction transaction = new Transaction();
                 transaction.setTransaction_id(rs.getLong("transaction_id"));
                 transaction.setReceiver_id(rs.getLong("receiver_id"));
                 transaction.setGiver_id(rs.getLong("giver_id"));
                 transaction.setAmount(rs.getDouble("amount"));
                 transaction.setForm(rs.getString("Form"));
-
+                transactions.add(transaction);
 
             }
             connection.close();
-            return transaction;
+            return transactions;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
