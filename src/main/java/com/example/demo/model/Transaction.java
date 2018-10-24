@@ -7,6 +7,9 @@ public class Transaction {
 
     private Long receiver_id;
     private Long giver_id;
+    private Double amount;
+    private String form;
+    private Long transaction_id;
 
     public Long getReceiver_id() {
         return receiver_id;
@@ -24,12 +27,12 @@ public class Transaction {
         this.giver_id = giver_id;
     }
 
-    public Double getHow_much() {
-        return how_much;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setHow_much(Double how_much) {
-        this.how_much = how_much;
+    public void setAmount(Double ammount) {
+        this.amount = ammount;
     }
 
     public String getForm() {
@@ -47,10 +50,5 @@ public class Transaction {
     public void setTransaction_id(Long transaction_id) {
         this.transaction_id = transaction_id;
     }
-
-    private Double how_much;
-    private String form;
-    private Long transaction_id;
-
 
 }

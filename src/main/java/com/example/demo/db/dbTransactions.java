@@ -5,10 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class dbTransactions extends connection {
 
-    public Transaction getTransaction(Long id) {
+    public List<Transaction> getTransaction() {
 
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT * FROM TRANSACTION";
@@ -16,23 +18,24 @@ public class dbTransactions extends connection {
         try {
             Connection connection = getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setLong(1, id);
+
 
 
             // execute select SQL stetement
             ResultSet rs = preparedStatement.executeQuery();
 
-            Transaction transaction = new Transaction();
+            List<Transaction> transactions = new ArrayList<>();
             while (rs.next()) {
-
+                Transaction transaction = new Transaction();
                 transaction.setTransaction_id(rs.getLong("transaction_id"));
                 transaction.setReceiver_id(rs.getLong("receiver_id"));
                 transaction.setGiver_id(rs.getLong("giver_id"));
-                transaction.setHow_much(rs.getDouble("How_much"));
+                transaction.setAmount(rs.getDouble("amount"));
                 transaction.setForm(rs.getString("Form"));
+                transactions.add(transaction);
             }
             connection.close();
-            return transaction;
+            return transactions;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -61,7 +64,7 @@ public class dbTransactions extends connection {
                 transaction.setTransaction_id(rs.getLong("transaction_id"));
                 transaction.setReceiver_id(rs.getLong("receiver_id"));
                 transaction.setGiver_id(rs.getLong("giver_id"));
-                transaction.setHow_much(rs.getDouble("How_much"));
+                transaction.setAmount(rs.getDouble("amount"));
                 transaction.setForm(rs.getString("Form"));
 
             }
@@ -91,7 +94,7 @@ public class dbTransactions extends connection {
                 transaction.setTransaction_id(rs.getLong("transaction_id"));
                 transaction.setReceiver_id(rs.getLong("receiver_id"));
                 transaction.setGiver_id(rs.getLong("giver_id"));
-                transaction.setHow_much(rs.getDouble("How_much"));
+                transaction.setAmount(rs.getDouble("amount"));
                 transaction.setForm(rs.getString("Form"));
 
 
@@ -122,7 +125,7 @@ public class dbTransactions extends connection {
 
                 transaction.setGiver_id(rs.getLong("giver_id"));
                 transaction.setReceiver_id(rs.getLong("receiver_id"));
-                transaction.setHow_much(rs.getDouble("How_much"));
+                transaction.setAmount(rs.getDouble("amount"));
                 transaction.setForm(rs.getString("Form"));
                 transaction.setTransaction_id(rs.getLong("transaction_id"));
 
@@ -146,7 +149,7 @@ public class dbTransactions extends connection {
             preparedStatement.setLong(1, transaction.getTransaction_id());
             preparedStatement.setLong(2, transaction.getReceiver_id());
             preparedStatement.setLong(3, transaction.getGiver_id());
-            preparedStatement.setDouble(4, transaction.getHow_much());
+            preparedStatement.setDouble(4, transaction.getAmount());
             preparedStatement.setString(5, transaction.getForm());
 
             // execute select SQL stetement
