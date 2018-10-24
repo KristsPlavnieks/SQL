@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class dbTransactions extends connection {
 
-    private Transaction getTransaction(Long id) {
+    public Transaction getTransaction(Long id) {
 
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT * FROM TRANSACTION";
@@ -16,6 +16,7 @@ public class dbTransactions extends connection {
         try {
             Connection connection = getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, id);
 
 
             // execute select SQL stetement
@@ -25,9 +26,9 @@ public class dbTransactions extends connection {
             while (rs.next()) {
 
                 transaction.setTransaction_id(rs.getLong("transaction_id"));
-                transaction.setReceiver(rs.getString("receiver"));
-                transaction.setGiver(rs.getString("giver"));
-                transaction.setHow_much(rs.getLong("How_much"));
+                transaction.setReceiver_id(rs.getLong("receiver_id"));
+                transaction.setGiver_id(rs.getLong("giver_id"));
+                transaction.setHow_much(rs.getDouble("How_much"));
                 transaction.setForm(rs.getString("Form"));
             }
             connection.close();
@@ -38,14 +39,15 @@ public class dbTransactions extends connection {
         }
         return null;
     }
-    private Transaction getReceiver() {
+    public Transaction getReceiver() {
 
         PreparedStatement preparedStatement = null;
-        String selectSQL = "SELECT receiver FROM TRANSACTION";
+        String selectSQL = "SELECT * FROM TRANSACTION WHERE receiver_id=?";
 
         try {
             Connection connection = getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
+
 
 
             // execute select SQL stetement
@@ -55,7 +57,12 @@ public class dbTransactions extends connection {
             Transaction transaction = new Transaction();
             while (rs.next()) {
 
-                transaction.setReceiver(rs.getString("receiver"));
+
+                transaction.setTransaction_id(rs.getLong("transaction_id"));
+                transaction.setReceiver_id(rs.getLong("receiver_id"));
+                transaction.setGiver_id(rs.getLong("giver_id"));
+                transaction.setHow_much(rs.getDouble("How_much"));
+                transaction.setForm(rs.getString("Form"));
 
             }
             connection.close();
@@ -66,10 +73,10 @@ public class dbTransactions extends connection {
         }
         return null;
     }
-    private Transaction getGiver() {
+    public Transaction getGiver() {
 
         PreparedStatement preparedStatement = null;
-        String selectSQL = "SELECT giver FROM TRANSACTION";
+        String selectSQL = "SELECT * FROM TRANSACTION WHERE giver_id=?";
 
         try {
             Connection connection = getConnection();
@@ -81,8 +88,12 @@ public class dbTransactions extends connection {
 
             Transaction transaction = new Transaction();
             while (rs.next()) {
+                transaction.setTransaction_id(rs.getLong("transaction_id"));
+                transaction.setReceiver_id(rs.getLong("receiver_id"));
+                transaction.setGiver_id(rs.getLong("giver_id"));
+                transaction.setHow_much(rs.getDouble("How_much"));
+                transaction.setForm(rs.getString("Form"));
 
-                transaction.setGiver(rs.getString("giver"));
 
             }
             connection.close();
@@ -93,10 +104,10 @@ public class dbTransactions extends connection {
         }
         return null;
     }
-    private Transaction receiverGiver() {
+    public Transaction receiverGiver() {
 
         PreparedStatement preparedStatement = null;
-        String selectSQL = "SELECT receiver, giver FROM TRANSACTION";
+        String selectSQL = "SELECT * FROM TRANSACTION WHERE receiver_id=?,giver_id=?";
 
         try {
             Connection connection = getConnection();
@@ -109,8 +120,11 @@ public class dbTransactions extends connection {
             Transaction transaction = new Transaction();
             while (rs.next()) {
 
-                transaction.setGiver(rs.getString("giver"));
-                transaction.setReceiver(rs.getString("receiver"));
+                transaction.setGiver_id(rs.getLong("giver_id"));
+                transaction.setReceiver_id(rs.getLong("receiver_id"));
+                transaction.setHow_much(rs.getDouble("How_much"));
+                transaction.setForm(rs.getString("Form"));
+                transaction.setTransaction_id(rs.getLong("transaction_id"));
 
             }
             connection.close();
@@ -130,9 +144,9 @@ public class dbTransactions extends connection {
             Connection connection = getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setLong(1, transaction.getTransaction_id());
-            preparedStatement.setString(2, transaction.getReceiver());
-            preparedStatement.setString(3, transaction.getGiver());
-            preparedStatement.setLong(4, transaction.getHow_much());
+            preparedStatement.setLong(2, transaction.getReceiver_id());
+            preparedStatement.setLong(3, transaction.getGiver_id());
+            preparedStatement.setDouble(4, transaction.getHow_much());
             preparedStatement.setString(5, transaction.getForm());
 
             // execute select SQL stetement

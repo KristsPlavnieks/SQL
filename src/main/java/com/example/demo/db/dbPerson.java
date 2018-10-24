@@ -45,7 +45,7 @@ public class dbPerson extends connection {
         return null;
     }
 
-    private Person getPersonById(Long id) {
+    public Person getPersonById(Long id) {
 
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT * FROM PERSON WHERE PERSON_ID = ?";

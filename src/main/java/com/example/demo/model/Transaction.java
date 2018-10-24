@@ -4,33 +4,31 @@ package com.example.demo.model;
 
 public class Transaction {
 
-    private String receiver;
-    private String giver;
-    private Long how_much;
-    private String form;
-    private Long transaction_id;
 
-    public String getReceiver() {
-        return receiver;
+    private Long receiver_id;
+    private Long giver_id;
+
+    public Long getReceiver_id() {
+        return receiver_id;
     }
 
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
+    public void setReceiver_id(Long receiver_id) {
+        this.receiver_id = receiver_id;
     }
 
-    public String getGiver() {
-        return giver;
+    public Long getGiver_id() {
+        return giver_id;
     }
 
-    public void setGiver(String giver) {
-        this.giver = giver;
+    public void setGiver_id(Long giver_id) {
+        this.giver_id = giver_id;
     }
 
-    public Long getHow_much() {
+    public Double getHow_much() {
         return how_much;
     }
 
-    public void setHow_much(Long how_much) {
+    public void setHow_much(Double how_much) {
         this.how_much = how_much;
     }
 
@@ -50,6 +48,9 @@ public class Transaction {
         this.transaction_id = transaction_id;
     }
 
+    private Double how_much;
+    private String form;
+    private Long transaction_id;
 
 
 }
