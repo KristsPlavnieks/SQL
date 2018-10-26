@@ -2,6 +2,7 @@ package com.example.demo.web.controller.web;
 
 import com.example.demo.db.dbPerson;
 import com.example.demo.model.Person;
+import com.example.demo.service.peopleService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,22 +11,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/mans")
 public class Controller {
-    private final nana nana;
-    private final com.example.demo.db.dbPerson dbPerson;
 
-    public Controller(nana nana, dbPerson dbPerson) {
-        this.nana = nana;
-        this.dbPerson = dbPerson;
+    private final peopleService peopleService;
+
+    public Controller(peopleService peopleService) {
+        this.peopleService = peopleService;
     }
 
-    @RequestMapping(value = "/greeting")
-    public String greeting() {
-        return nana.hey();
-//        return new Person(1, "lalla", "Pu");
-    }
+
+
     @RequestMapping(value = "/get-all")
     public List<Person> getPersons(){
-        return dbPerson.getPerson();
+        return peopleService.getPersons();
     }
 
     @RequestMapping(value = "/save")
@@ -38,7 +35,7 @@ public class Controller {
         return dbPerson.savePerson(person);
     }
     @RequestMapping(value = "/update")
-    public String updatePerson(){
+    public String updatePerson() {
         Long x = new Long(1);
         Person person = new Person( x, "Krists", "adolgs");
         person.setDebt(x);

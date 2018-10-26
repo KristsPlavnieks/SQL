@@ -4,26 +4,8 @@ public class Person {
     private Long id;
     private String name;
     private String surname;
-    private Long debt;
-    private Long lent;
-
-    public Long getDebt() {
-        return debt;
-    }
-
-    public void setDebt(Long debt) {
-        this.debt = debt;
-    }
-
-    public Long getLent() {
-        return lent;
-    }
-
-    public void setLent(Long lent) {
-        this.lent = lent;
-    }
-
-
+    private Double debt;
+    private Double lent;
 
     public Person(Long id, String name, String surname) {
         this.id = id;
@@ -32,6 +14,22 @@ public class Person {
     }
 
     public Person() {
+    }
+
+    public Double getDebt() {
+        return debt;
+    }
+
+    public void setDebt(Double debt) {
+        this.debt = debt;
+    }
+
+    public Double getLent() {
+        return lent;
+    }
+
+    public void setLent(Double lent) {
+        this.lent = lent;
     }
 
     public Long getId() {

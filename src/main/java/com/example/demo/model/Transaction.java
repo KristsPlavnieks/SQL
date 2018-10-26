@@ -5,28 +5,27 @@ package com.example.demo.model;
 public class Transaction {
 
 
-    private Long receiver_id;
-    private Long giver_id;
+    private Long receiverId;
+    private Long giverId;
     private Double amount;
     private String form;
     private Long transaction_id;
 
-    public Long getReceiver_id() {
-        return receiver_id;
+    public Long getReceiverId() {
+        return receiverId;
     }
 
-    public void setReceiver_id(Long receiver_id) {
-        this.receiver_id = receiver_id;
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
     }
 
-    public Long getGiver_id() {
-        return giver_id;
+    public Long getGiverId() {
+        return giverId;
     }
 
-    public void setGiver_id(Long giver_id) {
-        this.giver_id = giver_id;
+    public void setGiverId(Long giverId) {
+        this.giverId = giverId;
     }
-
     public Double getAmount() {
         return amount;
     }

@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class dbPerson extends connection {
 
-    public List<Person> getPerson() {
+    public List<Person> getPersons() {
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT * FROM PERSON";
         try {
@@ -31,8 +31,8 @@ public class dbPerson extends connection {
                 person.setId(rs.getLong("person_id"));
                 person.setName(rs.getString("NAME"));
                 person.setSurname(rs.getString("SURNAME"));
-                person.setDebt(rs.getLong("DEBT"));
-                person.setLent(rs.getLong("LENT"));
+                person.setDebt(rs.getDouble("DEBT"));
+                person.setLent(rs.getDouble("LENT"));
 
                 persons.add(person);
             }
@@ -45,36 +45,72 @@ public class dbPerson extends connection {
         return null;
     }
 
-    public Person getPersonById(Long id) {
+    public List<Person> getPersonsById(Long[] id) {
 
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT * FROM PERSON WHERE PERSON_ID = ?";
 
         try {
             Connection connection = getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setLong(1, id);
+            List<Person> persons = new ArrayList<>();
 
-            // execute select SQL stetement
-            ResultSet rs = preparedStatement.executeQuery();
+            for (int i = 0; i < id.length; i++) {
+                preparedStatement = connection.prepareStatement(selectSQL);
+                preparedStatement.setLong(1, id[i]);
+                ResultSet rs = preparedStatement.executeQuery();
 
-            Person person = new Person();
-            while (rs.next()) {
+                Person person = new Person();
+                while (rs.next()) {
 
-                person.setId(rs.getLong("person_id"));
-                person.setName(rs.getString("NAME"));
-                person.setSurname(rs.getString("SURNAME"));
-                person.setDebt(rs.getLong("DEBT"));
-                person.setLent(rs.getLong("LENT"));
+                    person.setId(rs.getLong("person_id"));
+                    person.setName(rs.getString("NAME"));
+                    person.setSurname(rs.getString("SURNAME"));
+                    person.setDebt(rs.getDouble("DEBT"));
+                    person.setLent(rs.getDouble("LENT"));
+                }
+                persons.add(person);
             }
+
             connection.close();
-            return person;
+            return persons;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return null;
     }
+
+//    public Person getPersonById(Long id) {
+//
+//        PreparedStatement preparedStatement = null;
+//        String selectSQL = "SELECT * FROM PERSON WHERE PERSON_ID = ?";
+//
+//        try {
+//            Connection connection = getConnection();
+//            preparedStatement = connection.prepareStatement(selectSQL);
+//            preparedStatement.setLong(1, id);
+//
+//            // execute select SQL stetement
+//            ResultSet rs = preparedStatement.executeQuery();
+//
+//            Person person = new Person();
+//            while (rs.next()) {
+//
+//                person.setId(rs.getLong("person_id"));
+//                person.setName(rs.getString("NAME"));
+//                person.setSurname(rs.getString("SURNAME"));
+//                person.setDebt(rs.getDouble("DEBT"));
+//                person.setLent(rs.getDouble("LENT"));
+//            }
+//            connection.close();
+//            return person;
+//
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
+//    }
 
     public String savePerson(Person person) {
         PreparedStatement preparedStatement = null;
@@ -86,8 +122,8 @@ public class dbPerson extends connection {
             preparedStatement.setLong(1, person.getId());
             preparedStatement.setString(2, person.getName());
             preparedStatement.setString(3, person.getSurname());
-            preparedStatement.setLong(4, person.getDebt());
-            preparedStatement.setLong(5, person.getLent());
+            preparedStatement.setDouble(4, person.getDebt());
+            preparedStatement.setDouble(5, person.getLent());
 
             // execute select SQL stetement
             preparedStatement.executeUpdate();
@@ -103,7 +139,7 @@ public class dbPerson extends connection {
     public  String updatePerson(Person person){
 
         PreparedStatement preparedStatement = null;
-        String selectSQL = "UPDATE PERSON SET NAME=?, SURNAME=?, DEBT=?, LENT=? WHERE PERSON_ID = ?";
+        String selectSQL = "UPDATE PERSON SET NAME=?, SURNAME=?, WHERE PERSON_ID = ?";
 
         try{
             Connection connection = getConnection();
@@ -111,9 +147,7 @@ public class dbPerson extends connection {
 
             preparedStatement.setString(1, person.getName());
             preparedStatement.setString(2, person.getSurname());
-            preparedStatement.setLong(3, person.getDebt());
-            preparedStatement.setLong(4, person.getLent());
-            preparedStatement.setLong(5, person.getId());
+            preparedStatement.setLong(3, person.getId());
 
             preparedStatement.executeUpdate();
             connection.close();
@@ -123,8 +157,24 @@ public class dbPerson extends connection {
             System.out.println(e.getMessage());
         }
         return null;
-
     }
+
+    public String updatePersonLent(Long id, Double ammount) {
+
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "UPDATE PERSON SET Lent=?, WHERE PERSON_ID = ?";
+
+        return null;
+    }
+
+    public String updatePersonDebt(Long id, Double ammount) {
+
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "UPDATE PERSON SET Debt=?, WHERE PERSON_ID = ?";
+
+        return null;
+    }
+
     public String deletePersonByID(Long id) {
 
         PreparedStatement preparedStatement = null;
